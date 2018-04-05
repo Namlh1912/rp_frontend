@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1010059048448",
+    "firebase_url": "https://dashbutton-9abc7.firebaseio.com",
+    "project_id": "dashbutton-9abc7",
+    "storage_bucket": "dashbutton-9abc7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1010059048448:android:497ef3e31dc5f534",
+        "android_client_info": {
+          "package_name": "dashbutton.dash"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1010059048448-t70jo1jnl49lvvd7h266dks9apdtpqkg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZ46zS5mMHANYq4Jc7PxwZCtTZIL6s-nQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
