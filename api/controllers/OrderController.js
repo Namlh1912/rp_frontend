@@ -8,7 +8,7 @@ firebase.initializeApp({
 
 const OrderProvider = require('../providers/OrderProvider');
 const ProductProvider = require('../providers/ProductProvider');
-const ButtonProvider = require('../providers/ButtonProvider');
+const ButtonProvider = require('../providers/CategoryProvider');
 const OrderDetailProvider = require('../providers/OrderDetailProvider');
 const UserProvider = require('../providers/UserProvider');
 const CommonProvider = require('../providers/CommonService');

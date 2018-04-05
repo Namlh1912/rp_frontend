@@ -1,7 +1,7 @@
 const moment = require('moment');
 
 const OrderRepository = require('../repositories/OrderRepository');
-const ButtonRepository = require('../repositories/ButtonRepository');
+const ButtonRepository = require('../repositories/CategoryRepository');
 
 const TIME_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 

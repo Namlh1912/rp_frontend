@@ -25,10 +25,6 @@ class CategoryProvider {
 		return this.categoryRepo.getDetail(id);
 	}
 
-	getByDeviceCode(code) {
-		return this.categoryRepo.getByDeviceCode(code);
-	}
-
 	list() {
 		return this.categoryRepo.getList();
 	}

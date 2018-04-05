@@ -54,11 +54,11 @@ module.exports.routes = {
   'delete /orders/:id': 'Order.delete',
 
   /************* CATEGORIES ***************/
-  'get /categories': 'Button.list',
-  'post /categories': 'Button.create',
-  'get /categories/:id': 'Button.detail',
-  'patch /categories': 'Button.update',
-  'delete /categories/:id': 'Button.delete',
+  'get /categories': 'Category.list',
+  'post /categories': 'Category.create',
+  'get /categories/:id': 'Category.detail',
+  'patch /categories': 'Category.update',
+  'delete /categories/:id': 'Category.delete',
 
   /************* USERS ***************/
   'post /login': 'User.login',

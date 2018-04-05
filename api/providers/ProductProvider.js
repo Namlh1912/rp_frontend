@@ -6,7 +6,7 @@ const fse = require('fs-extra');
 
 const ProductRepository = require('../repositories/ProductRepository');
 const OrderDetailRepository = require('../repositories/OrderDetailRepository');
-const ButtonRepository = require('../repositories/ButtonRepository');
+const CategoryRepository = require('../repositories/CategoryRepository');
 const FileUtil = require('../util/FileUtil');
 
 const TMP_UPLOAD_PATH = path.join(process.cwd(), '.tmp', 'public', 'images', 'upload');
@@ -32,18 +32,11 @@ class ProductProvider {
 		return this._repo;
 	}
 
-	get orderDetailRepo() {
-		if (!this._orderDetail) {
-			this._orderDetail = new OrderDetailRepository();
+	get categoryRepo() {
+		if (!this._categoryRepo) {
+			this._categoryRepo = new CategoryRepository();
 		}
-		return this._orderDetail;
-	}
-
-	get buttonRepo() {
-		if (!this._buttonDetail) {
-			this._buttonDetail = new ButtonRepository();
-		}
-		return this._buttonDetail;
+		return this._categoryRepo;
 	}
 
 	create(product) {
@@ -73,8 +66,8 @@ class ProductProvider {
 		return this.productRepo.getList();
 	}
 
-	listByBrand(brandId) {
-		return this.productRepo.getByBrand(brandId);
+	getByCategory(cateogryId) {
+		return this.productRepo.getByCategory(cateogryId);
 	}
 
 	update(data) {

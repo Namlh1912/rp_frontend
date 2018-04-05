@@ -1,7 +1,8 @@
 const moment = require('moment');
 // const Bluebird = require('bluebird-global');
 
-const CategoryProvider = require('../providers/ButtonProvider');
+const CategoryProvider = require('../providers/CategoryProvider');
+const ProductProvider = require('../providers/ProductProvider');
 const ControllerBase = require('./ControllerBase');
 
 const TIME_FORMAT = 'YYYY-MM-DD HH:mm:ss';
@@ -12,7 +13,7 @@ class CategoryController extends ControllerBase {
 	constructor() {
 		super();
 		this._exportedMethods = [
-			
+
 		]
 	}
 
@@ -21,6 +22,13 @@ class CategoryController extends ControllerBase {
 			this._provider = new CategoryProvider();
 		}
 		return this._provider;
+	}
+
+	get productProvider() {
+		if (!this._productProvider) {
+			this._productProvider = new ProductProvider();
+		}
+		return this._productProvider;
 	}
 
 	create(request, response) {
@@ -45,15 +53,16 @@ class CategoryController extends ControllerBase {
 		});
 	}
 
-	detail(request, response) {
+	async detail(request, response) {
 		let id = parseInt(request.param('id'), 10);
-
-		this.categoryProvider.detail(id).then(detail => {
+		try {
+			const [detail, products] = await Promise.all([this.categoryProvider.detail(id), this.productProvider.getByCategory(id)]);
+			detail.products = products;
 			response.ok(detail);
-		}).catch(err => {
+		} catch(err) {
 			response.serverError(`Get category id ${id} failed`);
 			sails.log.error(err);
-		});
+		}
 	}
 
 	getNow() {

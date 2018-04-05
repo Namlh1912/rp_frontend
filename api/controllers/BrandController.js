@@ -89,7 +89,7 @@ class BrandController extends ControllerBase {
 			let brandProm = [];
 			list.forEach(brand => {
 				brand.products = [];
-				brandProm.push(this.productProvider.listByBrand(brand.id));
+				brandProm.push(this.productProvider.getByCategory(brand.id));
 			});
 			let brandProducts = await Promise.all(brandProm);
 			brandProducts.forEach(products => {
