@@ -7,7 +7,8 @@ module.exports = {
 		},
 		description: 'string',
 		questionType: 'integer',
-		surveyId: 'integer'
+		surveyId: 'integer',
+		answer: 'string'
 	},
 	autoCreatedAt: false,
 	autoUpdatedAt: false,

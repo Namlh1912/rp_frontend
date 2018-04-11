@@ -11,14 +11,7 @@ class CustomerRepository {
 	}
 
 	getList() {
-		return this._CustomerModel.queryAsync(`
-			set search_path = photobooth, pg_catalog;
-			select t.*, count(d.Customer_id) as "assetCount"
-			from Customers t 
-			left outer join Customerdetail d on t.id = d.Customer_id 
-			group by t.id, d.Customer_id
-			order by t.id desc
-		`).then(Customers => Customers.rows);
+		return Customer.find();
 	}
 
 	getDetail(id) {
@@ -26,7 +19,6 @@ class CustomerRepository {
 	}
 
 	searchName(fieldID, tableDetail, condition, name) {
-
 		return this._CustomerModel.queryAsync(`
 			set search_path = photobooth, pg_catalog;
 			select id as "CustomerId", name from Customers

@@ -24,14 +24,7 @@ class CustomerController extends ControllerBase {
 
 	create(request, response) {
 		let body = request.body;
-		let now = moment().utc().format(TIME_FORMAT)
-		let theme = {
-			name: body['name'],
-			createdAt: now,
-			updatedAt: now
-		};
-
-		this.customerProvider.create(theme)
+		this.customerProvider.create(body)
 			.then(res => response.ok({ data: res }))
 			.catch(err => {
 				sails.log.error(err);

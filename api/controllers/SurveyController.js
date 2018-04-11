@@ -1,13 +1,13 @@
 const moment = require('moment');
 
-const BrandProvider = require('../providers/BrandProvider');
+const SurveyProvider = require('../providers/SurveyProvider');
 const ProductProvider = require('../providers/ProductProvider');
 const ControllerBase = require('./ControllerBase');
 
 const TIME_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 
 
-class BrandController extends ControllerBase {
+class SurveyController extends ControllerBase {
 
 	constructor() {
 		super();
@@ -16,9 +16,9 @@ class BrandController extends ControllerBase {
 		]
 	}
 
-	get brandProvider() {
+	get surveyProvider() {
 		if (!this._provider) {
-			this._provider = new BrandProvider();
+			this._provider = new SurveyProvider();
 		}
 		return this._provider;
 	}
@@ -30,27 +30,34 @@ class BrandController extends ControllerBase {
 		return this._productProvider;
 	}
 
-	create(request, response) {
-		let body = request.body;
-		this.brandProvider.create(body)
-			.then(res => response.ok(res))
-			.catch(err => {
-				sails.log.error(err);
-				response.serverError('Cannot create this brand');
-			});
+	async create(request, response) {
+		try {
+			let surveyData = request.body;
+			const survey = await this.surveyProvider.create(surveyData);
+			return response.ok(survey);
+		} catch (err) {
+			sails.log.error(err);
+			return response.serverError('Create Failed!');
+		}
+		// .then(res => response.ok(res))
+		// .catch(err => {
+		// 	sails.log.error(err);
+		// 	response.serverError('Cannot create this brand');
+		// });
 	}
 
-	detail(request, response) {
+	async detail(request, response) {
 		let id = parseInt(request.param('id'), 10);
-
-		this.brandProvider.detail(id)
-			.then(detail => {
-				response.ok(detail);
-			})
-			.catch(err => {
-				response.serverError(`Get brand id ${id} failed`);
-				sails.log.error(err);
-			});
+		try {
+			const detail = await this.surveyProvider.detail(id)
+			if (detail) {
+				return response.ok(detail)
+			}
+			return response.notFound();
+		} catch (err) {
+			response.serverError(`Get survey id ${id} failed`);
+			sails.log.error(err);
+		}
 	}
 
 	delete(request, response) {
@@ -64,11 +71,13 @@ class BrandController extends ControllerBase {
 						themes: groups
 					};
 				}
-				return this.brandProvider.delete(id);
+				return this.surveyProvider.delete(id);
 			})
 			.then(deleted => {
 				if (Array.isArray(deleted)) {
-					response.ok({ data: deleted });
+					response.ok({
+						data: deleted
+					});
 				} else {
 					response.forbidden(deleted);
 				}
@@ -84,37 +93,45 @@ class BrandController extends ControllerBase {
 	}
 
 	async list(request, response) {
-		let list = await this.brandProvider.list();
-		if (list && list.length) {
-			let brandProm = [];
-			list.forEach(brand => {
-				brand.products = [];
-				brandProm.push(this.productProvider.getByCategory(brand.id));
-			});
-			let brandProducts = await Promise.all(brandProm);
-			brandProducts.forEach(products => {
-				if(products.length) {
-					let index = list.findIndex(el => el.id == products[0].brandId);
-					list[index].products = products;
-				}
-			});
+		try {
+			let list = await this.surveyProvider.list();
 			return response.ok(list);
+		} catch (err) {
+			sails.log.error(err);
+			return response.serverError('Get brands list failed');
 		}
-		return response.serverError('Get brands list failed');
+		// if (list && list.length) {
+		// 	let brandProm = [];
+		// 	list.forEach(brand => {
+		// 		brand.products = [];
+		// 		brandProm.push(this.productProvider.getByCategory(brand.id));
+		// 	});
+		// 	let brandProducts = await Promise.all(brandProm);
+		// 	brandProducts.forEach(products => {
+		// 		if(products.length) {
+		// 			let index = list.findIndex(el => el.id == products[0].brandId);
+		// 			list[index].products = products;
+		// 		}
+		// 	});
+		// }
 	}
 
 	searchByName(request, response) {
 		let name = request.param('name');
 		if (name) {
-			this.brandProvider.getByName(name).then(res => {
+			this.surveyProvider.getByName(name).then(res => {
 				if (res.length) {
-					return response.ok(res );
+					return response.ok(res);
 				} else {
-					return response.notFound({ message: 'No matches' });
+					return response.notFound({
+						message: 'No matches'
+					});
 				}
 			}).catch(err => {
 				sails.log.error(new Error(err));
-				response.serverError({ message: 'No matches.' })
+				response.serverError({
+					message: 'No matches.'
+				})
 			});
 		}
 	}
@@ -154,4 +171,4 @@ class BrandController extends ControllerBase {
 	}
 }
 
-module.exports = new BrandController().exports();
+module.exports = new SurveyController().exports();

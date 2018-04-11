@@ -24,7 +24,11 @@ class ProductRepository {
 	}
 
 	getByCategory(categoryId) {
-		return Product.find({ categoryId });
+		return this._ProductModel.queryAsync(`
+			select p.*, avg(r.rating) as rates from products p
+			left outer join rates r on r.productId = p.id
+			where p.categoryId = ${categoryId} group by p.id
+		`, []);
 	}
 
 	remove(id) {
@@ -41,7 +45,7 @@ class ProductRepository {
 		set search_path = public, pg_catalog;
 		select products.name, products.id, products.img_link as imgLink
 		from products
-		where lower(name) like  '%${name}%'
+		where lower(name) like '%${name}%'
 		`).then(res => res.rows);
 	}
 }

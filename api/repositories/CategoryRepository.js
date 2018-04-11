@@ -12,11 +12,11 @@ class CategoryRepository {
 	}
 
 	getList() {
-		return this._CategoryModel.find();
+		return this._CategoryModel.find({sort: 'id DESC'});
 	}
 
 	getDetail(id) {
-		return this._CategoryModel.find({ id });
+		return this._CategoryModel.findOne({ id });
 	}
 
 	update(data, index) {

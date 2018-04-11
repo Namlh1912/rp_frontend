@@ -22,69 +22,69 @@
 
 module.exports.routes = {
 
-  /***************************************************************************
-  *                                                                          *
-  * Make the view located at `views/homepage.ejs` (or `views/homepage.jade`, *
-  * etc. depending on your default view engine) your home page.              *
-  *                                                                          *
-  * (Alternatively, remove this and add an `index.html` file in your         *
-  * `products` directory)                                                      *
-  *                                                                          *
-  ***************************************************************************/
+	/***************************************************************************
+	*                                                                          *
+	* Make the view located at `views/homepage.ejs` (or `views/homepage.jade`, *
+	* etc. depending on your default view engine) your home page.              *
+	*                                                                          *
+	* (Alternatively, remove this and add an `index.html` file in your         *
+	* `products` directory)                                                      *
+	*                                                                          *
+	***************************************************************************/
 
-  '/': {
-    view: 'homepage'
-  },
-  
-  /************* PRODUCTS ***************/
-  'get /products': 'Product.list',
-  'get /products/:id': 'Product.detail',
-  'get /products/name/:name': 'Product.searchName',  
-  'post /products': 'Product.create',
-  'patch /products': 'Product.update',
-  'delete /products/:id': 'Product.delete',
+	'/': {
+		view: 'homepage'
+	},
 
-  /************* ORDERS ***************/
-  'get /orders/:column/:method': 'Order.list',
-  'post /orders': 'Order.create',
-  'get /order-products/:device_code': 'Order.orderProduct',
-  'get /orders/:id': 'Order.detail',
-  'get /user-orders/:id': 'Order.getByUserId',
-  'get /subcribe-order-room': 'Order.subcribeToOrderRoom',
-  'delete /orders/:id': 'Order.delete',
+	/************* PRODUCTS ***************/
+	'get /products': 'Product.list',
+	'get /products/:id': 'Product.detail',
+	'get /products/name/:name': 'Product.searchName',
+	'post /products': 'Product.create',
+	'patch /products': 'Product.update',
+	'delete /products/:id': 'Product.delete',
 
-  /************* CATEGORIES ***************/
-  'get /categories': 'Category.list',
-  'post /categories': 'Category.create',
-  'get /categories/:id': 'Category.detail',
-  'patch /categories': 'Category.update',
-  'delete /categories/:id': 'Category.delete',
+	/************* ORDERS ***************/
+	//   'get /orders/:column/:method': 'Order.list',
+	'post /rates': 'Rate.create',
+	//   'get /order-products/:device_code': 'Order.orderProduct',
+	//   'get /orders/:id': 'Order.detail',
+	//   'get /user-orders/:id': 'Order.getByUserId',
+	//   'get /subcribe-order-room': 'Order.subcribeToOrderRoom',
+	//   'delete /orders/:id': 'Order.delete',
 
-  /************* USERS ***************/
-  'post /login': 'User.login',
-  'post /users': 'User.create',
-  'get /users': 'User.list',
-  'get /users/:id': 'User.detail',
-  'patch /users': 'User.update',
-  'delete /users/:id': 'User.delete',
-  
-  /************* BRANDS ***************/
-  'post /brands': 'Brand.create',
-  'get /brands/:id': 'Brand.detail',
-  'get /brands': 'Brand.list',
-  'get /brands/name/:name': 'Brand.searchByName',
-  'patch /brands': 'Brand.update',
-  'delete /brands/:id': 'Brand.delete',
+	/************* CATEGORIES ***************/
+	'get /categories': 'Category.list',
+	'post /categories': 'Category.create',
+	'get /categories/:id': 'Category.detail',
+	'patch /categories': 'Category.update',
+	'delete /categories/:id': 'Category.delete',
+
+	/************* USERS ***************/
+	'post /login': 'User.login',
+	'post /users': 'User.create',
+	'get /users': 'User.list',
+	'get /users/:id': 'User.detail',
+	'patch /users': 'User.update',
+	'delete /users/:id': 'User.delete',
+
+	/************* BRANDS ***************/
+	'post /surveys': 'Survey.create',
+	'get /surveys/:id': 'Survey.detail',
+	'get /surveys': 'Survey.list',
+	'get /surveys/name/:name': 'Survey.searchByName',
+	'patch /surveys': 'Survey.update',
+	'delete /surveys/:id': 'Survey.delete',
 
 
-  /***************************************************************************
-  *                                                                          *
-  * Custom routes here...                                                    *
-  *                                                                          *
-  * If a request to a URL doesn't match any of the custom routes above, it   *
-  * is matched against Sails route blueprints. See `config/blueprints.js`    *
-  * for configuration options and examples.                                  *
-  *                                                                          *
-  ***************************************************************************/
+	/***************************************************************************
+	*                                                                          *
+	* Custom routes here...                                                    *
+	*                                                                          *
+	* If a request to a URL doesn't match any of the custom routes above, it   *
+	* is matched against Sails route blueprints. See `config/blueprints.js`    *
+	* for configuration options and examples.                                  *
+	*                                                                          *
+	***************************************************************************/
 
 };

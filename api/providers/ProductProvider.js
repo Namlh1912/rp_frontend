@@ -5,7 +5,7 @@ const path = require('path');
 const fse = require('fs-extra');
 
 const ProductRepository = require('../repositories/ProductRepository');
-const OrderDetailRepository = require('../repositories/OrderDetailRepository');
+// const OrderDetailRepository = require('../repositories/OrderDetailRepository');
 const CategoryRepository = require('../repositories/CategoryRepository');
 const FileUtil = require('../util/FileUtil');
 
@@ -39,14 +39,11 @@ class ProductProvider {
 		return this._categoryRepo;
 	}
 
-	create(product) {
-		let thumbnailPath = '';
+	async create(product) {
+		const thumbnailPath = path.join(TMP_UPLOAD_PATH, `thumbnail-${product.imgLink}`);
 		return jimpReadAsync(path.join(IMG_PATH, product.imgLink)).then(jimpFile => {
-			thumbnailPath = path.join(IMG_PATH, `thumbnail-${product.imgLink}`);
 			return this.resizeImage(350, jimpFile, thumbnailPath);
 		}).then(() => {
-			const destPath = path.join(TMP_UPLOAD_PATH, product.imgLink);
-			fse.copy(thumbnailPath, destPath).then(() => sails.log.info('Copy Succeed.'));
 			return this.productRepo.create(product);
 		}).catch(err => {
 			let error = err;
@@ -87,13 +84,13 @@ class ProductProvider {
 	}
 
 	//#region upload file
-	resizeImage(size, image, toPath) {
+	resizeImage(size, image, fromPath) {
 		return new Promise((resolve, reject) => {
-			image.resize(size, jimp.AUTO).write(toPath, (err) => {
+			image.resize(size, jimp.AUTO).write(fromPath, (err) => {
 				if (err) return reject(new Error(err));
 				sails.log.info('resized image');
-				let copyDest = path.join(IMG_PATH, path.basename(toPath));
-				return resolve(this._fileUtil.copyFile(toPath, copyDest));
+				let toPath = path.join(IMG_PATH, path.basename(fromPath));
+				return resolve(this._fileUtil.copyFile(fromPath, toPath));
 			});
 		});
 	}
