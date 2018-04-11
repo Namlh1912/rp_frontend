@@ -6,7 +6,11 @@ module.exports = {
 			primaryKey: true
 		},
 		name: 'string',
-		email: 'string'
+		email: 'string',
+		phone: 'string',
+		city: 'string',
+		company: 'string',
+		business: 'string',
 	},
 	autoCreatedAt: false,
 	autoUpdatedAt: false,
